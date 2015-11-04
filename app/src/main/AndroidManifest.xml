@@ -19,7 +19,8 @@
         <activity android:name=".Upload"
             android:label="Upload">
         </activity>
-
+        <meta-data android:name="AA_DB_NAME" android:value="Pickrand.db" />
+        <meta-data android:name="AA_DB_VERSION" android:value="5" />
     </application>
 
 </manifest>
