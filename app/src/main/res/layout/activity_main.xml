@@ -15,6 +15,13 @@
         android:stretchMode="columnWidth"
         android:gravity="center"/>
 
+    <Button
+        android:id="@+id/showButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/showButton"
 
-
+    />
 </RelativeLayout>
