@@ -77,4 +77,12 @@
     <option name="mySupportsUserInfoFilter" value="true" />
 >>>>>>> 75cce453bc526925c8069dccae1e75b14d728e33
   </component>
+<<<<<<< HEAD
+  <component name="SvnBranchConfigurationManager">
+    <option name="mySupportsUserInfoFilter" value="true" />
+  </component>
 </project>
+
+=======
+</project>
+>>>>>>> origin/master

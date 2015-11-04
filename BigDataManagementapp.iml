@@ -4,16 +4,24 @@
     <facet type="java-gradle" name="Java-Gradle">
       <configuration>
         <option name="BUILD_FOLDER_PATH" value="$MODULE_DIR$/build" />
-        <option name="BUILDABLE" value="false" />
       </configuration>
     </facet>
   </component>
+<<<<<<< HEAD
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/build/classes/main" />
+    <output-test url="file://$MODULE_DIR$/build/classes/test" />
+=======
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="true">
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     <output url="file://$MODULE_DIR$/build/classes/main" />
     <output-test url="file://$MODULE_DIR$/build/classes/test" />
 >>>>>>> 75cce453bc526925c8069dccae1e75b14d728e33
+=======
+>>>>>>> origin/master
+>>>>>>> e6815fea9f6f81e7468281e49f14d01e62347842
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
@@ -22,3 +30,4 @@
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
+
