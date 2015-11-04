@@ -6,5 +6,6 @@
     <string name="upload">Upload Photo</string>
     <string name="cancelButton">Cancel</string>
     <string name="submitButton">Upload</string>
+    <string name="showButton">Show more</string>
 
 </resources>

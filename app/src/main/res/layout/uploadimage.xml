@@ -6,29 +6,32 @@
 
     <ImageButton
         android:layout_width="fill_parent"
-        android:layout_height="400dp"
+        android:layout_height="470dp"
         android:id="@+id/imageButton"
         android:layout_above="@+id/submitButton" />
 
-
-    <Button
-        android:id="@+id/cancelButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/LinearLayout02"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="@string/cancelButton"
-
-        />
-    <Button
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/submitButton"
-        android:text="@string/submitButton"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/imageButton"
-        android:layout_toRightOf="@+id/cancelButton"
-      />
+        android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/cancelButton"
 
-
+            />
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/submitButton"
+            android:text="@string/submitButton"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/imageButton"
+            android:layout_toRightOf="@+id/cancelButton"
+          />
+    </LinearLayout>
 </LinearLayout>
