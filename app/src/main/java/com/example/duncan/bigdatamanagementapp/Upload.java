@@ -2,17 +2,15 @@ package com.example.duncan.bigdatamanagementapp;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 
 import java.io.File;
@@ -20,7 +18,8 @@ import java.io.File;
 /**
  * Created by Duncan on 29/10/2015.
  */
-public class Upload extends ActionBarActivity{
+public class Upload extends ActionBarActivity
+{
     public ImageButton img; //gets the image button from xml
     private static final int SELECT_PICTURE = 1; //set SELECT_PICTURE to true.
     public Button submit; //get submit button from xml
@@ -28,6 +27,7 @@ public class Upload extends ActionBarActivity{
     private File Path = null;
     public String path2;
     private File selectedImagePath = null;
+    private int Id = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +49,20 @@ public class Upload extends ActionBarActivity{
             //once the user clicks submit, it grabs the data inputted by the user and saves it in the database.
             @Override
             public void onClick(View v) {
+                int id;
+                Bitmap img;
+
+                if(ImageModel.getLastId() == 0)
+                    id = ImageModel.getLastId();
+                else
+                    id = ImageModel.getLastId() + 1;
+
+                img = BitmapFactory.decodeFile(path2);
+                ImageModel image = new ImageModel(id, img);
+
+                image.save();
+
+                Log.d("dbtest", ImageModel.getLastId()+"");
 
                 finish(); //exits the current screen
             }

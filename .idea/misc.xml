@@ -43,8 +43,12 @@
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
+<<<<<<< HEAD
   <component name="SvnBranchConfigurationManager">
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
 </project>
 
+=======
+</project>
+>>>>>>> origin/master
