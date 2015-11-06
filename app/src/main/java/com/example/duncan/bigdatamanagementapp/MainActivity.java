@@ -26,13 +26,7 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         //setContentView();
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD
         onCreateView();
-=======
-
-        GrididView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this));
->>>>>>> 5c603389750947545b881274981d13bbb2b62c6b
     }
 
     public View onCreateView()
