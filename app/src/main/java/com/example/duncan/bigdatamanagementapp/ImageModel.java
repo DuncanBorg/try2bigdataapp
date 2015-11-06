@@ -22,18 +22,5 @@ public class ImageModel extends Model
                 .from(ImageModel.class)
                 .execute();
     }
-//
-//    public static int getLastId()
-//    {
-//        List<ImageModel> images = getAll();
-//        int lastId = 0;
-//
-//        for(ImageModel img : images)
-//        {
-//            if(img.id > lastId)
-//                lastId = img.id;
-//        }
-//
-//        return lastId;
-//    }
+
 }
