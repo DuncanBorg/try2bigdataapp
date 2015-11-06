@@ -1,10 +1,13 @@
 package com.example.duncan.bigdatamanagementapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,12 +18,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.activeandroid.ActiveAndroid;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -35,70 +42,11 @@ public class Upload extends ActionBarActivity
     private File selectedImagePath = null;
     private int Id = 0;
 
-    public static AsyncTask<String, Void, String> executeTest(String targetURL)
+    private boolean isNetworkAvailable()
     {
-        Log.d("dbconntest", "hello");
-        return new AsyncTask<String, Void, String>()
-        {
-            @Override
-            protected String doInBackground(String... params)
-            {
-                Log.d("dbconntest", "hello2");
-                HttpURLConnection connection = null;
-                try
-                {
-                    //Create connection
-                    URL url = new URL(params[0]);
-                    connection = (HttpURLConnection)url.openConnection();
-                    //connection.setRequestMethod("POST");
-                    connection.setRequestMethod("GET");
-                    //connection.setRequestProperty("Content-Type",
-                    //        "application/x-www-form-urlencoded");
-
-    //            connection.setRequestProperty("Content-Length",
-    //                    Integer.toString(urlParameters.getBytes().length));
-    //            connection.setRequestProperty("Content-Language", "en-US");
-    //
-    //            connection.setUseCaches(false);
-    //            connection.setDoOutput(true);
-
-                    //Send request
-    //            DataOutputStream wr = new DataOutputStream (
-    //                    connection.getOutputStream());
-    //            wr.writeBytes(urlParameters);
-    //            wr.close();
-
-                    //Get Response
-                    InputStream is = connection.getInputStream();
-                    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-                    StringBuilder response = new StringBuilder(); // or StringBuffer if not Java 5+
-                    String line;
-                    Log.d("dbconntest", "hello5");
-                    while((line = rd.readLine()) != null)
-                    {
-                        response.append(line);
-                        response.append('\r');
-                    }
-                    Log.d("dbconntest", "hello6");
-                    rd.close();
-                    Log.d("dbconntest", "hello4 "+response.toString());
-                    return response.toString();
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                    Log.d("dbconntest", "hello3 "+e.getMessage());
-                    return null;
-                }
-                finally
-                {
-                    if(connection != null)
-                    {
-                        connection.disconnect();
-                    }
-                }
-            }
-        }.execute(targetURL);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     public static AsyncTask<String, Void, Bitmap> downloadImage(String target)
@@ -141,6 +89,7 @@ public class Upload extends ActionBarActivity
                     int responseCode = connection.getResponseCode();
                     Log.d("dbconntest", "RespCode "+responseCode);
 
+
                     //Get Response
                     InputStream is = connection.getInputStream();
                     byte data[] = new byte[connection.getContentLength()];
@@ -154,7 +103,7 @@ public class Upload extends ActionBarActivity
                     }
 
                     is.close();
-                    Log.d("dbconntest", "helloRead " + new String(data, 0, 1044) );
+                    Log.d("dbconntest", "helloRead " + new String(data, 0, 1044));
                     Log.d("dbconntest", "helloRead "+ total);
 
                     return BitmapFactory.decodeByteArray(data, 0, data.length);
@@ -176,9 +125,79 @@ public class Upload extends ActionBarActivity
         }.execute(target);
     }
 
+    public static AsyncTask<String, Void, Integer> uploadImage(String target)
+    {
+        return new AsyncTask<String, Void, Integer>()
+        {
+            @Override
+            protected Integer doInBackground(String... params)
+            {
+                HttpURLConnection connection = null;
+                try
+                {
+                    //Create connection
+//                    URL url = new URL(params[0]);
+//                    connection = (HttpURLConnection)url.openConnection();
+//                    connection.setRequestMethod("POST");
+//                    connection.setRequestProperty("Content-Type",
+//                            "application/octet-stream");
+//
+//                    connection.setDoInput(true);
+//                    connection.setDoOutput(true);
+//                    connection.setConnectTimeout(1000);
+//                    connection.setReadTimeout(1000);
+//
+//                    int responseCode = connection.getResponseCode();
+//
+//                    //Get Response
+//                    InputStream is = connection.getInputStream();
+//                    byte data[] = new byte[connection.getContentLength()];
+//
+//                    int total = 0;
+
+                    byte[] image =  ImageModel.getAll().get(0).img;
+
+                    Log.d("am i human?", image+"");
+
+                    HttpClient httpClient = new DefaultHttpClient();
+
+                    HttpPost httpPost = new HttpPost("http://largedata.azurewebsites.net/Home/UploadImage");
+
+                    httpPost.setEntity(new ByteArrayEntity(image));
+                    HttpResponse response = httpClient.execute(httpPost);
+
+                    Log.d("pls i luv u", response+"");
+
+//                    while(total < data.length)
+//                    {
+//                        int write = is.write(data, total, data.length - total);
+//                        total += write;
+//                    }
+
+//                    is.close();
+
+//                    return BitmapFactory.decodeByteArray(data, 0, data.length);
+                    return 0;
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                    Log.d("dbconntest", "hello3 "+e.getMessage());
+                    return null;
+                }
+                finally
+                {
+                    if(connection != null)
+                    {
+                        connection.disconnect();
+                    }
+                }
+            }
+        }.execute(target);
+    }
+
     protected void onCreate(Bundle savedInstanceState)
     {
-        ActiveAndroid.initialize(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.uploadimage);
 
@@ -197,6 +216,7 @@ public class Upload extends ActionBarActivity
 
         //Download image to the app
         AsyncTask<String, Void, Bitmap> var =  downloadImage("http://largedata.azurewebsites.net/Home/DownloadImage/1");
+        Log.d("are u Connected", isNetworkAvailable()+"");
 
         try
         {
@@ -220,9 +240,16 @@ public class Upload extends ActionBarActivity
             public void onClick(View v)
             {
                 ImageModel image = new ImageModel();
-                image.img = BitmapFactory.decodeFile(path2);
-
-                image.save();
+                image.img = readFile(path2);
+                if(image.img==null) {
+                    Log.d("IMG ", "is null!");
+                }
+                else {
+                    image.save();
+                    uploadImage("");
+                    MainActivity.images.add(image);
+                    MainActivity.adapter.notifyDataSetChanged();
+                }
 
                 Log.d("dbtest", ImageModel.getAll()+"");
 
@@ -232,11 +259,9 @@ public class Upload extends ActionBarActivity
 
         cancel = (Button) findViewById(R.id.cancelButton);
 
-        cancel.setOnClickListener(new View.OnClickListener()
-        {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 finish();
             }
         }); //exits the current window
@@ -258,6 +283,37 @@ public class Upload extends ActionBarActivity
                 img.setImageBitmap(BitmapFactory.decodeFile(path));
             }
         }
+    }
+
+    public byte[] readFile(String filepath)
+    {
+        File file = new File(filepath);
+
+        byte[] bytes = new byte[(int) file.length()];
+        InputStream stream =null;
+        try
+        {
+            stream = new FileInputStream(file);
+            int total = 0;
+
+            while(total < bytes.length)
+            {
+                total += stream.read(bytes, total, bytes.length - total);
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            if(stream != null) try {
+                stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return bytes;
     }
 
     //this mathod gets the actual URI using a cursor from the database.

@@ -5,17 +5,41 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.GridView;
+
+import com.activeandroid.ActiveAndroid;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity
+{
+    static List<ImageModel> images = new ArrayList<>();
+    static ImageAdapter adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        ActiveAndroid.initialize(this);
         super.onCreate(savedInstanceState);
-
+        //setContentView();
         setContentView(R.layout.activity_main);
+        onCreateView();
     }
 
+    public View onCreateView()
+    {
+        images.clear();
+        images.addAll(ImageModel.getAll());
+        GridView grid = (GridView) findViewById(R.id.gridview);
+
+        adapter = new ImageAdapter(this, images);
+        grid.setAdapter(adapter);
+
+        return grid;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

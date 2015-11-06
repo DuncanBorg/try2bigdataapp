@@ -1,7 +1,5 @@
 package com.example.duncan.bigdatamanagementapp;
 
-import android.graphics.Bitmap;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -13,7 +11,7 @@ import java.util.List;
 public class ImageModel extends Model
 {
     @Column(name = "Img")
-    public Bitmap img;
+    public byte[] img;
 
     public ImageModel() {
         super();
